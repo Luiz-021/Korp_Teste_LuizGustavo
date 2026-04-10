@@ -8,7 +8,12 @@ builder.Services.AddDbContext<FaturamentoContext>(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); // Precisaremos instalar o pacote do Swagger de novo aqui!
+builder.Services.AddSwaggerGen(); 
+
+builder.Services.AddHttpClient("EstoqueClient", client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5062"); 
+});
 
 var app = builder.Build();
 

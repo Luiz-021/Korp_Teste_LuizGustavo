@@ -30,4 +30,22 @@ public class ProdutoController : ControllerBase
 
         return CreatedAtAction(nameof(GetProdutos), new { id = produto.Id }, produto);
     }
+
+    [HttpPost("baixar-estoque")]
+    public async Task<IActionResult> BaixarEstoque(List<BaixaEstoqueRequest> itensParaBaixa)
+    {
+        foreach (var item in itensParaBaixa)
+        {
+            var produto = await _context.Produtos.FindAsync(item.ProdutoId);
+            if (produto == null) return NotFound($"Produto {item.ProdutoId} não encontrado.");
+            
+            if (produto.Saldo < item.Quantidade) 
+                return BadRequest($"Saldo insuficiente para o produto {produto.Descricao}.");
+
+            produto.Saldo -= item.Quantidade; 
+        }
+
+        await _context.SaveChangesAsync();
+        return Ok("Estoque atualizado com sucesso.");
+    }
 }
