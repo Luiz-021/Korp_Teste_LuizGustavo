@@ -1,0 +1,34 @@
+<div class="home-container">
+  <div class="hero-section">
+    <h1>Bem-vindo ao Sistema Korp!</h1>
+    <p>Selecione abaixo qual módulo você deseja acessar.</p>
+  </div>
+
+  <div class="cards-container">
+    <mat-card class="module-card">
+      <mat-card-header>
+        <mat-card-title>📦 Módulo de Estoque</mat-card-title>
+        <mat-card-subtitle>Gerencie seus produtos</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Cadastre novos produtos, consulte saldos e mantenha o inventário atualizado em tempo real.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" routerLink="/produtos">Acessar Estoque</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="module-card">
+      <mat-card-header>
+        <mat-card-title>🧾 Módulo de Faturamento</mat-card-title>
+        <mat-card-subtitle>Emissão de Notas Fiscais</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Gere novas notas fiscais, adicione produtos do estoque e consulte o histórico de vendas.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="accent" routerLink="/notas-fiscais">Acessar Faturamento</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

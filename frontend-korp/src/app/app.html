@@ -1,1 +1,13 @@
-<router-outlet></router-outlet>
+<mat-toolbar color="primary" class="navbar">
+  <span class="logo" routerLink="/">ERP Korp</span>
+  
+  <span class="spacer"></span> 
+  
+  <button mat-button routerLink="/">Início</button>
+  <button mat-button routerLink="/produtos">Estoque</button>
+  <button mat-button routerLink="/notas-fiscais">Faturamento</button>
+</mat-toolbar>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

@@ -40,7 +40,6 @@ export class ProdutoComponent implements OnInit {
     this.carregarProdutos();
   }
 
-  // RXJS EM AÇÃO: O "subscribe" fica ouvindo a resposta do C#
   carregarProdutos() {
   this.estoqueService.listarProdutos().subscribe({
     next: (dados) => {
@@ -56,8 +55,8 @@ export class ProdutoComponent implements OnInit {
       this.estoqueService.cadastrarProduto(this.produtoForm.value).subscribe({
         next: () => {
           alert('Produto cadastrado com sucesso!');
-          this.produtoForm.reset({ saldo: 0 }); // Limpa a tela
-          this.carregarProdutos(); // Atualiza a tabela na hora
+          this.produtoForm.reset({ saldo: 0 }); 
+          this.carregarProdutos();
         },
         error: (err) => {
           console.error(err);

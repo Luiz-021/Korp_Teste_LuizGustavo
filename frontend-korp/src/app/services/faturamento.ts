@@ -17,4 +17,9 @@ export class FaturamentoService {
   listarNotas(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  imprimirNota(id: number): Observable<any> {
+    // Usamos post vazio {} porque o ID já está na URL
+    return this.http.post(`${this.apiUrl}/${id}/imprimir`, {}); 
+  }
 }
