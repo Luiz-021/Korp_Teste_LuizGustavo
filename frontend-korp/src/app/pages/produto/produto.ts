@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,12 +13,12 @@ import { EstoqueService } from '../../services/estoque';
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule, // Para gerenciar o formulário
-    MatFormFieldModule, // Visual do campo de texto
-    MatInputModule,     // Visual do input
-    MatButtonModule,    // Visual do botão
-    MatCardModule,      // Visual de "cartão" para agrupar as coisas
-    MatTableModule      // Visual da tabela de listagems
+    ReactiveFormsModule, 
+    MatFormFieldModule, 
+    MatInputModule,     
+    MatButtonModule,    
+    MatCardModule,      
+    MatTableModule      
   ],
   templateUrl: './produto.html', 
   styleUrl: './produto.css'
@@ -28,8 +28,7 @@ export class ProdutoComponent implements OnInit {
   produtos = new MatTableDataSource<any>([]);
   colunasTabela: string[] = ['id', 'codigo', 'descricao', 'saldo'];
 
-  // Injetamos o montador de formulários e o nosso serviço de rede
-  constructor(private fb: FormBuilder, private estoqueService: EstoqueService) {
+  constructor(private fb: FormBuilder, private estoqueService: EstoqueService, private cdr: ChangeDetectorRef) {
     this.produtoForm = this.fb.group({
       codigo: ['', Validators.required],
       descricao: ['', Validators.required],
@@ -37,7 +36,6 @@ export class ProdutoComponent implements OnInit {
     });
   }
 
-  // Isso roda automaticamente quando a tela abre
   ngOnInit() {
     this.carregarProdutos();
   }
@@ -46,8 +44,8 @@ export class ProdutoComponent implements OnInit {
   carregarProdutos() {
   this.estoqueService.listarProdutos().subscribe({
     next: (dados) => {
-      // O DataSource cuida de avisar o HTML para se atualizar na hora e sem erros!
-      this.produtos.data = dados; 
+      this.produtos.data = dados;
+      this.cdr.detectChanges(); 
     },
     error: (err) => console.error('Erro ao carregar produtos do C#:', err)
   });

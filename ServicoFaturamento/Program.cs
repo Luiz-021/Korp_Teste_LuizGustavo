@@ -15,6 +15,12 @@ builder.Services.AddHttpClient("EstoqueClient", client =>
     client.BaseAddress = new Uri("http://localhost:5062"); 
 });
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("PermitirAngular", policy => {
+        policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -25,6 +31,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
+
+app.UseCors("PermitirAngular");
+
 app.UseAuthorization();
 app.MapControllers();
 

@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EstoqueContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddControllers(); // Habilita o uso de Controllers
+builder.Services.AddControllers(); 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -24,13 +24,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.MapOpenApi(); // Essa é uma feature mais nova do .NET, pode manter!
+    app.MapOpenApi(); 
 }
 
 app.UseHttpsRedirection();
 app.UseRouting();
 
-// APLIQUE ISSO AQUI (Tem que vir antes do Authorization e do MapControllers!):
 app.UseCors("PermitirAngular");
 
 app.UseAuthorization();

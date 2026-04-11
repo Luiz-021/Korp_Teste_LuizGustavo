@@ -48,4 +48,18 @@ public class ProdutoController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok("Estoque atualizado com sucesso.");
     }
+
+    [HttpPut("{id}")]
+    public IActionResult AtualizarProduto(int id, [FromBody] Produto produtoAtualizado)
+    {
+        if (id != produtoAtualizado.Id) return BadRequest();
+
+        var produtoExistente = _context.Produtos.Find(id);
+        if (produtoExistente == null) return NotFound();
+
+        produtoExistente.Saldo = produtoAtualizado.Saldo;
+
+        _context.SaveChanges();
+        return Ok(produtoExistente);
+    }
 }
