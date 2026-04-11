@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './nota-fiscal.html',
   styleUrl: './nota-fiscal.css',
 })
-export class NotaFiscal {}
+export class NotaFiscalComponent {}
