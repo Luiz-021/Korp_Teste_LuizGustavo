@@ -8,14 +8,14 @@
   display: flex;
   gap: 15px;
   margin-top: 15px;
-  align-items: center; /* Alinha no meio da linha */
+  align-items: center;
 }
 
 .flex-2 { flex: 2; }
 .flex-1 { flex: 1; }
 
 .btn-add {
-  height: 56px; /* Mesma altura dos campos de texto do Google */
+  height: 56px; 
 }
 
 .carrinho {

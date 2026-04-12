@@ -34,7 +34,7 @@ export class NotaFiscalComponent implements OnInit {
 
   notasFiscais = new MatTableDataSource<any>([]);
   colunasTabela: string[] = ['numero', 'status', 'resumo', 'qtdItens', 'acoes'];
-  imprimindoId: number | null = null;
+  imprimindoIds: number[] = [];
   constructor(
     private fb: FormBuilder,
     private faturamentoService: FaturamentoService,
@@ -124,28 +124,27 @@ export class NotaFiscalComponent implements OnInit {
     if (!itens || itens.length === 0) return 'Sem itens';
 
     return itens.map(item => {
-      // Procura o produto na lista que já baixamos do Estoque
       const produto = this.produtos.find(p => p.id === item.produtoId);
       const nome = produto ? produto.descricao : `Produto #${item.produtoId}`;
       return `${item.quantidade}x ${nome}`;
-    }).join(', '); // Junta tudo com vírgula
+    }).join(', '); 
   }
 
   acionarImpressao(nota: any) {
-    this.imprimindoId = nota.id; // Liga o indicador de processamento (Loading) na tela
+    this.imprimindoIds.push(nota.id);
 
     this.faturamentoService.imprimirNota(nota.id).subscribe({
       next: () => {
         alert(`Nota ${nota.numero} impressa com sucesso! O estoque foi deduzido.`);
-        this.imprimindoId = null; // Desliga o loading
-        this.carregarNotas(); // Atualiza a tabela (o status vai mudar para Fechada)
-        this.carregarProdutos(); // Atualiza os saldos no dropdown
+        this.imprimindoIds = this.imprimindoIds.filter(id => id !== nota.id);
+        this.carregarNotas(); 
+        this.carregarProdutos(); 
       },
       error: (err: any) => {
         console.error(err);
         const mensagemDoBackend = typeof err.error === 'string' ? err.error : 'O serviço de estoque pode estar offline.';
         alert(`Falha na Impressão:\n${mensagemDoBackend}`);
-        this.imprimindoId = null; // Desliga o loading
+        this.imprimindoIds = this.imprimindoIds.filter(id => id !== nota.id);
       }
     });
   }

@@ -45,8 +45,16 @@ public class ProdutoController : ControllerBase
             produto.Saldo -= item.Quantidade; 
         }
 
-        await _context.SaveChangesAsync();
-        return Ok("Estoque atualizado com sucesso.");
+        try
+        {
+            await Task.Delay(3000); // Temporário para testar concorrência
+            await _context.SaveChangesAsync();
+            return Ok("Estoque atualizado com sucesso.");
+        }
+        catch (DbUpdateConcurrencyException) 
+        {
+            return Conflict("Erro de concorrência: O estoque foi modificado por outra transação simultânea. Tente novamente.");
+        }
     }
 
     [HttpPut("{id}")]
